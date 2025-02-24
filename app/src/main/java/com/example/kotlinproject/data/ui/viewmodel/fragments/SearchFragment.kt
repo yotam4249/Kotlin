@@ -1,4 +1,4 @@
-package com.example.kotlinproject.fragments
+package com.example.kotlinproject.data.ui.viewmodel.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
