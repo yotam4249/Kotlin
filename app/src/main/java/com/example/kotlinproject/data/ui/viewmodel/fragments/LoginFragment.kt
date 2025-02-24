@@ -43,15 +43,23 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
-                    requireActivity().finish()
-                } else {
-                    Toast.makeText(requireContext(), "Login Failed", Toast.LENGTH_SHORT).show()
+        if(email == "" || password == "")
+        {
+            Toast.makeText(requireContext(), "Login Failed", Toast.LENGTH_LONG).show()
+        }
+        else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                            .putExtra("USER_EMAIL", email)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    } else {
+                        Toast.makeText(requireContext(), "Login Failed", Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
+        }
     }
 
     override fun onDestroyView() {
