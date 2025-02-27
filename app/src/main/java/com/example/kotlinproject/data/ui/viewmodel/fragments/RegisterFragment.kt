@@ -43,8 +43,7 @@ class RegisterFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val name = binding.etName.text.toString().trim()
-            val age = binding.etAge.text.toString().trim()
-            registerUser(email, password, name, age)
+            registerUser(email, password, name)
         }
 
         binding.btnGoToLogin.setOnClickListener {
@@ -52,8 +51,8 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun registerUser(email: String, password: String, name: String, age: String) {
-        if (email.isEmpty() || password.isEmpty() || name.isEmpty() || age.isEmpty()) {
+    private fun registerUser(email: String, password: String, name: String) {
+        if (email.isEmpty() || password.isEmpty() || name.isEmpty() ) {
             Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_LONG).show()
             return
         }
@@ -67,7 +66,6 @@ class RegisterFragment : Fragment() {
                             uid = user.uid,
                             name = name,
                             email = email,
-                            age = age.toInt(),
                             photoUrl = null
                         )
 

@@ -35,4 +35,10 @@
         android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings"/>
+    <fragment
+        android:id="@+id/EditProfile"
+        android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.ProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
 </navigation>

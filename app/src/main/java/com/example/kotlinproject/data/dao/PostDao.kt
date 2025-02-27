@@ -10,7 +10,7 @@ import com.example.kotlinproject.data.model.Post
 
 
 @Dao
-interface postDao {
+interface PostDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(post: Post)
 

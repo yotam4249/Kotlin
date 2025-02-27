@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import com.example.kotlinproject.data.database.PostDatabase
 import com.example.kotlinproject.data.model.Post
-import com.example.kotlinproject.data.dao.postDao
 
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {

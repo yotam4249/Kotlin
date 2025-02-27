@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     id ("kotlin-kapt")
     id("kotlin-parcelize")
+    id("kotlin-android")
 }
 
 android {
@@ -49,6 +50,11 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.firebase.firestore.ktx)
     kapt (libs.androidx.room.compiler)
+    implementation ("com.github.yalantis:ucrop:2.2.6")
+    implementation("androidx.room:room-runtime:2.5.1")
+    kapt("androidx.room:room-compiler:2.5.1")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    kapt("com.github.bumptech.glide:ksp-compiler:4.15.1")
     implementation (libs.androidx.room.ktx)
     implementation(libs.kotlinx.metadata.jvm)
     implementation(libs.androidx.navigation.fragment.ktx)

@@ -11,7 +11,7 @@ import com.example.kotlinproject.data.model.Post
 
 @Database(entities = [Post::class], version = 1)
 abstract class PostDatabase : RoomDatabase() {
-    abstract fun postDao(): postDao
+    abstract fun postDao(): PostDao
 
     companion object {
         @Volatile
