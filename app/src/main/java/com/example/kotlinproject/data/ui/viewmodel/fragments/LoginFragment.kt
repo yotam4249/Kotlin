@@ -30,6 +30,12 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
+        val loggedUser = auth.currentUser
+        if(loggedUser != null){
+            val intent = Intent(requireContext(),MainActivity::class.java)
+                .putExtra("USER_EMAIL",loggedUser.email)
+            startActivity(intent)
+        }
 
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
