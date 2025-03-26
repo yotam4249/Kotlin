@@ -1,6 +1,5 @@
 package com.example.kotlinproject.data.ui.viewmodel.fragments
 
-
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinproject.data.model.User
-import com.example.kotlinproject.data.ui.viewmodel.fragments.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,11 +41,7 @@ class EditProfileViewModel(
                     _user.value = fetchedUser
                     if (fetchedUser != null) {
                         email.value = fetchedUser.email
-                    }
-                    if (fetchedUser != null) {
                         username.value = fetchedUser.name
-                    }
-                    if (fetchedUser != null) {
                         avatarUrl.value = fetchedUser.photoUrl
                     }
                 }
@@ -75,7 +69,7 @@ class EditProfileViewModel(
             uid = userId,
             name = username.value ?: "",
             email = email.value ?: "",
-            photoUrl = avatarUrl.value ?: "",
+            photoUrl = avatarUrl.value ?: ""
         )
 
         viewModelScope.launch(Dispatchers.IO) {

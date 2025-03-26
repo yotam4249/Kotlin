@@ -44,7 +44,7 @@ class ProfileViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val fetchedUser = userRepository.getUserById(userId)
-                val userPosts = postRepository.getPostsByUser(userId)
+                val userPosts = postRepository.getPostsByUser(userId)?.value
 
 
 
@@ -52,7 +52,7 @@ class ProfileViewModel(
                 withContext(Dispatchers.Main) {
                     if (userPosts != null) {
                         _user.value = fetchedUser
-                        _posts.value = userPosts
+                        _posts.value = userPosts.filterNotNull()
                     }
                 }
             } catch (e: Exception) {

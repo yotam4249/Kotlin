@@ -1,7 +1,5 @@
 package com.example.kotlinproject.data.ui.viewmodel.fragments
 
-
-
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -18,12 +16,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.kotlinproject.R
-import com.example.kotlinproject.data.ui.viewmodel.fragments.UserRepository
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
 class EditProfileFragment : Fragment() {
 
+    // IMPORTANT: Now we use our EditProfileViewModelFactory
     private val viewModel: EditProfileViewModel by viewModels {
         EditProfileViewModelFactory(UserRepository(requireContext()))
     }
@@ -57,6 +55,7 @@ class EditProfileFragment : Fragment() {
         setupObservers()
         setupListeners()
 
+        // Fetch the user profile AFTER the ViewModel is created:
         viewModel.fetchUserProfile()
 
         return view
@@ -64,7 +63,8 @@ class EditProfileFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.user.observe(viewLifecycleOwner, Observer { user ->
-            usernameEditText.setText(user.uid)
+            // Show user data in the UI
+            usernameEditText.setText(user.name) // changed from user.uid
             emailTextView.text = user.email
             Glide.with(this).load(user.photoUrl).into(avatarImageView)
         })
