@@ -32,6 +32,7 @@ package com.example.kotlinproject.data.ui.viewmodel.fragments
 
 //}
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,7 @@ import com.example.kotlinproject.data.ui.viewmodel.fragments.PostAdapter
 import com.example.kotlinproject.data.ui.viewmodel.fragments.EditProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import androidx.navigation.fragment.navArgs
+import com.example.kotlinproject.AuthActivity
 
 class ProfileFragment : Fragment() {
 
@@ -118,12 +120,15 @@ class ProfileFragment : Fragment() {
 
     private fun setupListeners() {
         logOutButton.setOnClickListener {
-            viewModel.logOut {
-                FirebaseAuth.getInstance().signOut()
-                //////////////////yotam check if thats inagh for log out////////
-                findNavController().navigate(R.id.loginFragment)
-                requireActivity().finish()
-            }
+            FirebaseAuth.getInstance().signOut()
+
+            // Start a new activity that holds your LoginFragment
+            val intent = Intent(requireContext(), AuthActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            // Optional: Finish current activity to prevent going back
+            requireActivity().finish()
         }
 
         editButton.setOnClickListener {
