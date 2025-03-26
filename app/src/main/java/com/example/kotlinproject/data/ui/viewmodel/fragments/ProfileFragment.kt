@@ -51,13 +51,14 @@ import com.example.kotlinproject.data.ui.viewmodel.fragments.UserRepository
 import com.example.kotlinproject.data.ui.viewmodel.fragments.PostAdapter
 import com.example.kotlinproject.data.ui.viewmodel.fragments.EditProfileFragment
 import com.google.firebase.auth.FirebaseAuth
+import androidx.navigation.fragment.navArgs
 
 class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels {
         ProfileViewModelFactory(PostRepository(requireContext()), UserRepository(requireContext()))
     }
-
+    private val args : ProfileFragmentArgs by navArgs()
     private lateinit var avatarImageView: ImageView
     private lateinit var userNameTextView: TextView
     private lateinit var emailTextView: TextView
@@ -86,6 +87,15 @@ class ProfileFragment : Fragment() {
         viewModel.fetchProfile()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val user = args.user!!
+        userNameTextView.text = user.name
+        emailTextView.text = user.email
+        Glide.with(this).load(user.photoUrl).into(avatarImageView)
     }
 
     private fun setupRecyclerView() {
