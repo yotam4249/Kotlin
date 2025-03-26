@@ -27,9 +27,6 @@ class EditProfileViewModel(
 
     val isLoading = MutableLiveData(false)
 
-    /**
-     * Fetch current user details
-     */
     fun fetchUserProfile() {
         isLoading.value = true
         val userId = auth.currentUser?.uid ?: return

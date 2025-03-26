@@ -9,22 +9,21 @@ import androidx.navigation.fragment.navArgs
 import com.example.kotlinproject.R
 import com.example.kotlinproject.data.model.User
 
-class SearchFragment : Fragment() {
+class AddPostFragment : Fragment() {
 
-    private val args: SearchFragmentArgs by navArgs()
+    // SafeArgs: retrieve the User argument
+    private val args: AddPostFragmentArgs by navArgs()
     private lateinit var currentUser: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        currentUser = args.user
+        currentUser = args.user // ← now you can use currentUser anywhere
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    ): View? {
+        return inflater.inflate(R.layout.fragment_add_post, container, false)
     }
 }

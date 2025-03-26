@@ -49,6 +49,7 @@ googleid = { group = "com.google.android.libraries.identity.googleid", name = "g
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]
+safe-args = { id = "androidx.navigation.safeargs.kotlin", version = "2.7.6" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }

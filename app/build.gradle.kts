@@ -6,6 +6,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlin-android")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.safe.args)
 }
 
 android {
@@ -54,6 +55,7 @@ kapt {
     }
 }
 dependencies {
+
     implementation(libs.androidx.room.runtime)
     implementation(libs.firebase.firestore.ktx)
     kapt (libs.androidx.room.compiler)
