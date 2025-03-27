@@ -21,6 +21,10 @@ data class Post(
     @SerializedName("name")
     val name: String = "",
 
+    @ColumnInfo(name = "userId")
+    @SerializedName("userId")
+    val userId: String ,
+
     @ColumnInfo(name = "brand")
     @SerializedName("brand")
     val brand: String = "",
@@ -64,6 +68,7 @@ data class Post(
     companion object{
         private const val ID = "id"
         private const val NAME = "name"
+        private const val USER_ID = "userId"
         private const val BRAND = "brand"
         private const val RATING = "rating"
         private const val USER_NAME = "username"
@@ -79,6 +84,7 @@ data class Post(
             return Post(
                 id = (json[ID] as? Long)?.toInt() ?: 0,
                 name = json[NAME] as? String ?: "",
+                userId = json[USER_ID] as? String ?: "",
                 brand = json[BRAND] as? String ?: "",
                 rating = (json[RATING] as? Double)?.toFloat() ?: 0f,
                 userName = json[USER_NAME] as? String ?: "",
@@ -109,6 +115,7 @@ data class Post(
         get() = hashMapOf(
             ID to id,
             NAME to name,
+            USER_ID to userId,
             BRAND to brand,
             RATING to rating,
             USER_NAME to userName,
