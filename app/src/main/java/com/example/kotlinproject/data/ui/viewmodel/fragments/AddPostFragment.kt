@@ -100,6 +100,7 @@ class AddPostFragment : Fragment() {
                 rating = rating,
                 userName = currentUser.name,
                 avatarUrl = currentUser.photoUrl ?: "",
+                userId = currentUser.uid, // Clearly store user's UID
                 shoeUrl = imagePath,
                 shoeDescription = description,
                 shoePrice = price,
@@ -107,6 +108,7 @@ class AddPostFragment : Fragment() {
                 category = category,
                 lastUpdated = System.currentTimeMillis()
             )
+
             postViewModel.addPost(newPost)
 
             withContext(Dispatchers.Main) {

@@ -113,43 +113,62 @@ import kotlinx.coroutines.launch
 class EditProfileViewModel(
     private  val userRepository: UserRepository,
     private val imageStorageHandler : ImageHandler,
-    private val postDao: PostDao
-):ViewModel(){
+    private val postDao: PostDao,
+    var newProfileImageUri: Uri? = null
 
-    private val _user = MutableLiveData<User>()
-    val user:LiveData<User> = _user
+):ViewModel() {
+
+    private val _user = MutableLiveData<User?>()
+    val user: MutableLiveData<User?> = _user
     val username = MutableLiveData<String>()
     val isLoading = MutableLiveData(false)
 
-    fun loadUser(userFromArgs:User){
+    fun loadUser(userFromArgs: User) {
         _user.value = userFromArgs
         username.value = userFromArgs.name
     }
 
-    fun updateImage(context: Context,uri: Uri){
+    fun updateImage(context: Context, uri: Uri) {
         viewModelScope.launch {
-            val path = imageStorageHandler.saveImageToStorage(context,uri)
+            val path = imageStorageHandler.saveImageToStorage(context, uri)
             _user.value = _user.value?.copy(photoUrl = path)
         }
     }
 
     fun updateUserProfile(
-        oldUserName: String, // clearly pass the old username
+        userId: String, // Clearly use userId
+        imageUri: Uri?,
+        context: Context,
         onSuccess: () -> Unit,
         onFailure: (Exception?) -> Unit
     ) {
         viewModelScope.launch {
             try {
-                val updatedUser = _user.value?.copy(name = username.value ?: "")
+                isLoading.value = true
+                var updatedPhotoUrl = _user.value?.photoUrl ?: ""
+
+                if (imageUri != null) {
+                    updatedPhotoUrl = imageStorageHandler.saveImageToStorage(context, imageUri).toString()
+                }
+
+                val updatedUser = _user.value?.copy(
+                    name = username.value ?: "",
+                    photoUrl = updatedPhotoUrl
+                )
+
                 if (updatedUser != null) {
                     userRepository.updateUser(updatedUser)
+                    _user.postValue(updatedUser)
+
+                    // ✅ Clearly update posts using userId
                     postDao.updateUserDetailsInPosts(
-                        oldName = oldUserName,
+                        userId = userId,
                         newName = updatedUser.name,
                         newAvatarUrl = updatedUser.photoUrl ?: ""
                     )
-                    val reloaded = userRepository.getUserByEmail(updatedUser.email)
-                    _user.value = reloaded!!
+
+                    val reloadedUser = userRepository.getUserByEmail(updatedUser.email)
+                    _user.postValue(reloadedUser!!)
                     onSuccess()
                 }
             } catch (e: Exception) {
@@ -159,4 +178,5 @@ class EditProfileViewModel(
             }
         }
     }
+
 }

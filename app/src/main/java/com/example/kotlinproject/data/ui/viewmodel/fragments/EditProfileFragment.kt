@@ -352,7 +352,7 @@ class EditProfileFragment : Fragment(){
     private lateinit var changePasswordBtn: Button
     private val imagePicker = registerForActivityResult(ActivityResultContracts.GetContent()){uri->
         uri?.let {
-            viewModel.updateImage(requireContext(),uri)
+            viewModel.newProfileImageUri = uri  // Clearly store URI here
             imageView.setImageURI(uri)
         }
     }
@@ -393,8 +393,10 @@ class EditProfileFragment : Fragment(){
 
     private fun setupObservers(){
         viewModel.user.observe(viewLifecycleOwner, Observer { updatedUser ->
-            usernameEditText.setText(updatedUser.name)
-            val imagePath = updatedUser.photoUrl
+            if (updatedUser != null) {
+                usernameEditText.setText(updatedUser.name)
+            }
+            val imagePath = updatedUser?.photoUrl
             if(!imagePath.isNullOrEmpty()){
                 val file = ImageHandler.getImageFile(requireContext(),imagePath)
                 Glide.with(this)
@@ -420,10 +422,15 @@ class EditProfileFragment : Fragment(){
         }
 
         confirmBtn.setOnClickListener {
-            val oldUserName = user.name // clearly store old username
-            viewModel.username.value = usernameEditText.text.toString()
+            val userId = user.uid // Clearly use uid
+            val newUserName = usernameEditText.text.toString()
+
+            viewModel.username.value = newUserName
+
             viewModel.updateUserProfile(
-                oldUserName = oldUserName, // clearly pass it here
+                userId = userId,
+                imageUri = viewModel.newProfileImageUri,
+                context = requireContext(),
                 onSuccess = {
                     Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
                     val updatedUser = viewModel.user.value!!
@@ -435,6 +442,8 @@ class EditProfileFragment : Fragment(){
                 }
             )
         }
+
+
 
         changePasswordBtn.setOnClickListener {
             showChangePasswordDialog()
