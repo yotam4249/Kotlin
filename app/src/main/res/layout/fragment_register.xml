@@ -7,7 +7,7 @@
     tools:context=".data.ui.viewmodel.fragments.RegisterFragment">
 
     <ImageView
-        android:id="@+id/avatar_register"
+        android:id="@+id/ivAvatar"
         android:layout_width="207dp"
         android:layout_height="198dp"
         android:layout_marginTop="40dp"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Choose Profile Image"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@id/avatar_register"
+        app:layout_constraintTop_toBottomOf="@id/ivAvatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
