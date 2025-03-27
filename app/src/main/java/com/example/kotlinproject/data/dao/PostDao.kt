@@ -32,8 +32,8 @@ interface PostDao {
     fun getPostsByShoeName(searchString: String?): List<Post?>?
 
     // ✅ clearly fixed query
-    @Query("UPDATE posts SET user_name = :newName, avatar_url = :newAvatarUrl WHERE user_name = :oldName")
-    suspend fun updateUserDetailsInPosts(oldName: String, newName: String, newAvatarUrl: String)
+    @Query("UPDATE posts SET user_name = :newName, avatar_url = :newAvatarUrl WHERE userId = :userId")
+    suspend fun updateUserDetailsInPosts(userId: String, newName: String, newAvatarUrl: String)
 
     @Delete
     suspend fun delete(post: Post)
