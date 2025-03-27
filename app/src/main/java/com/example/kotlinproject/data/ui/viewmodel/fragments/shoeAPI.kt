@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,7 @@ class ShoeApiFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ShoeAdapter
     private val shoes = mutableListOf<Shoe>()
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +37,11 @@ class ShoeApiFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_shoe_a_p_i, container, false)
 
         recyclerView = view.findViewById(R.id.shoe_recycler_view)
+        progressBar = view.findViewById(R.id.shoe_api_progress)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter = ShoeAdapter(shoes)
         recyclerView.adapter = adapter
+
 
         fetchShoesFromShoegazing()
 
@@ -45,6 +49,7 @@ class ShoeApiFragment : Fragment() {
     }
 
     private fun fetchShoesFromShoegazing() {
+        progressBar.visibility = View.VISIBLE
         lifecycleScope.launch {
             val fetchedShoes = getShoesFromShoegazing()
             if (fetchedShoes.isNotEmpty()) {
@@ -54,6 +59,7 @@ class ShoeApiFragment : Fragment() {
             } else {
                 Toast.makeText(requireContext(), "No shoes found", Toast.LENGTH_SHORT).show()
             }
+            progressBar.visibility = View.GONE
         }
     }
 
