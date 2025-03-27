@@ -22,6 +22,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.kotlinproject.R
 import com.example.kotlinproject.data.ImageHandler
+import com.example.kotlinproject.data.database.PostDatabase
 import com.example.kotlinproject.data.model.User
 import com.example.kotlinproject.data.ui.viewmodel.fragments.EditProfileFragmentArgs
 import com.google.firebase.auth.FirebaseAuth
@@ -361,10 +362,12 @@ class EditProfileFragment : Fragment(){
         user = args.user
         val repo = UserRepository(requireContext())
         val imageHandler = ImageHandler
-        val factory = EditProfileViewModelFactory(repo,imageHandler)
-        viewModel = ViewModelProvider(this,factory)[EditProfileViewModel::class.java]
+        val postDao = PostDatabase.getDatabase(requireContext()).postDao() // clearly inject PostDao
+        val factory = EditProfileViewModelFactory(repo, imageHandler, postDao)
+        viewModel = ViewModelProvider(this, factory)[EditProfileViewModel::class.java]
         viewModel.loadUser(user)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -417,8 +420,10 @@ class EditProfileFragment : Fragment(){
         }
 
         confirmBtn.setOnClickListener {
+            val oldUserName = user.name // clearly store old username
             viewModel.username.value = usernameEditText.text.toString()
             viewModel.updateUserProfile(
+                oldUserName = oldUserName, // clearly pass it here
                 onSuccess = {
                     Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
                     val updatedUser = viewModel.user.value!!

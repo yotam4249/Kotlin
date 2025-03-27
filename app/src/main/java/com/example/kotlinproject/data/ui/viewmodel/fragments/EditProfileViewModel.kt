@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinproject.data.ImageHandler
+import com.example.kotlinproject.data.dao.PostDao
 import com.example.kotlinproject.data.model.User
 import com.example.kotlinproject.data.ui.viewmodel.fragments.UserRepository
 import kotlinx.coroutines.launch
@@ -111,7 +112,8 @@ import kotlinx.coroutines.launch
 
 class EditProfileViewModel(
     private  val userRepository: UserRepository,
-    private val imageStorageHandler : ImageHandler
+    private val imageStorageHandler : ImageHandler,
+    private val postDao: PostDao
 ):ViewModel(){
 
     private val _user = MutableLiveData<User>()
@@ -132,21 +134,27 @@ class EditProfileViewModel(
     }
 
     fun updateUserProfile(
-        onSuccess: () ->Unit,
+        oldUserName: String, // clearly pass the old username
+        onSuccess: () -> Unit,
         onFailure: (Exception?) -> Unit
-    ){
+    ) {
         viewModelScope.launch {
             try {
-                val updatedUser = _user.value?.copy(name = username.value?:"")
-                if(updatedUser != null){
+                val updatedUser = _user.value?.copy(name = username.value ?: "")
+                if (updatedUser != null) {
                     userRepository.updateUser(updatedUser)
+                    postDao.updateUserDetailsInPosts(
+                        oldName = oldUserName,
+                        newName = updatedUser.name,
+                        newAvatarUrl = updatedUser.photoUrl ?: ""
+                    )
                     val reloaded = userRepository.getUserByEmail(updatedUser.email)
                     _user.value = reloaded!!
                     onSuccess()
                 }
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 onFailure(e)
-            }finally {
+            } finally {
                 isLoading.value = false
             }
         }
