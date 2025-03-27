@@ -19,18 +19,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
 
-        val user: User = args.user!!
-
-        // Example usage: show a toast or set a TextView
-        Toast.makeText(requireContext(), "Welcome, ${user.name}", Toast.LENGTH_LONG).show()
-
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val user = args.user
-        // use the user object
     }
 }

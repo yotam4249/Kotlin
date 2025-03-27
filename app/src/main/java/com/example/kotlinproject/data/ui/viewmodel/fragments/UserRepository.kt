@@ -20,6 +20,7 @@ class UserRepository(context: Context) {
         return userDao.getByEmail(email)
     }
     suspend fun updateUser(user: User) {
+        userDao.update(user)
         db.collection("users").document(user.uid).set(user).await()
     }
 
