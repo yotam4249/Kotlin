@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("com.google.devtools.ksp")
     alias(libs.plugins.safe.args)
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -55,7 +56,19 @@ kapt {
     }
 }
 dependencies {
-
+    val ktorVersion = "2.3.4"
+    implementation("org.jsoup:jsoup:1.16.1")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("org.jsoup:jsoup:1.16.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation(libs.androidx.room.runtime)
     implementation(libs.firebase.firestore.ktx)
     kapt (libs.androidx.room.compiler)

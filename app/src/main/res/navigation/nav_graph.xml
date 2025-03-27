@@ -28,6 +28,15 @@
         android:id="@+id/action_global_editProfile"
         app:destination="@id/EditProfile" />
 
+    <action
+        android:id="@+id/action_global_shoeApiFragment"
+        app:destination="@id/shoeApiFragment" />
+
+    <fragment
+        android:id="@+id/shoeApiFragment"
+        android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.ShoeApiFragment"
+        android:label="fragment_shoe_api"
+        tools:layout="@layout/fragment_shoe_a_p_i" />
 
     <fragment
         android:id="@+id/splashFragment"
