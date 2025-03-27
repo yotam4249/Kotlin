@@ -15,12 +15,12 @@ interface PostDao {
     suspend fun insert(post: Post)
 
     @Query("SELECT * FROM posts ORDER BY rating DESC")
-    suspend fun getAllPosts(): List<Post>
+    fun getAllPosts(): LiveData<List<Post>>
 
-    @Query("select * from posts where  user_name= :username")
-    fun getUserPosts(username: String?): LiveData<List<Post?>?>?
+    @Query("SELECT * FROM posts WHERE user_name = :username")
+    fun getUserPosts(username: String): LiveData<List<Post>>
 
-    @Query("select * from posts where user_name = :postUserName")
+    @Query("SELECT * FROM posts WHERE user_name = :postUserName")
     fun getPostByUserName(postUserName: String?): Post?
 
     @Query("select * from posts where id=:id")

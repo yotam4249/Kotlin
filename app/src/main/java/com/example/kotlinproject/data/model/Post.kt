@@ -51,7 +51,7 @@ data class Post(
 
     @ColumnInfo(name = "like_url")
     @SerializedName("likeUrl")
-    var likeUrl: String? = "",
+    var like: Int? = 0,
 
     @ColumnInfo(name = "category")
     @SerializedName("category")
@@ -86,7 +86,7 @@ data class Post(
                 shoeDescription = json[DESCRIPTION] as? String,
                 shoePrice = json[PRICE] as? Double ?: 0.0,
                 shoeUrl = json[IMAGE_URL] as? String,
-                likeUrl = json[LIKE] as? String,
+                like = json[LIKE] as? Int?: 0,
                 category = json[CATEGORY] as? String
                 ).apply { lastUpdated = (json[LAST_UPDATED] as? Timestamp)?.seconds }
                 }
@@ -116,7 +116,7 @@ data class Post(
             DESCRIPTION to shoeDescription,
             PRICE to shoePrice,
             IMAGE_URL to shoeUrl,
-            LIKE to likeUrl,
+            LIKE to like,
             CATEGORY to category,
             LAST_UPDATED to FieldValue.serverTimestamp()
         )

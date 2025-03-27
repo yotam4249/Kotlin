@@ -10,11 +10,11 @@ import com.example.kotlinproject.data.model.Post
 class PostRepository(context: Context) {
     private val postDao: PostDao = PostDatabase.getDatabase(context).postDao()
 
-    fun getAllPosts(): LiveData<List<Post?>?> {
-        return postDao.getUserPosts(null) ?: throw Exception("No Posts Found")
+    fun getAllPosts(): LiveData<List<Post>> {
+        return postDao.getUserPosts(null.toString()) ?: throw Exception("No Posts Found")
     }
 
-    fun getPostsByUser(username: String): LiveData<List<Post?>?>? {
+    fun getPostsByUser(username: String): LiveData<List<Post>> {
         return postDao.getUserPosts(username)
     }
 

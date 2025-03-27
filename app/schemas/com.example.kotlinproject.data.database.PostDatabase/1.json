@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "de9c3c08af9a1ada32e9a6359a645df6",
+    "identityHash": "a4f940a377b731153a2e5bb5589aae44",
     "entities": [
       {
         "tableName": "posts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `brand` TEXT NOT NULL, `rating` REAL NOT NULL, `user_name` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `shoe_description` TEXT, `shoe_price` REAL NOT NULL, `shoe_url` TEXT, `like_url` TEXT, `category` TEXT, `last_updated` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `brand` TEXT NOT NULL, `rating` REAL NOT NULL, `user_name` TEXT NOT NULL, `avatar_url` TEXT NOT NULL, `shoe_description` TEXT, `shoe_price` REAL NOT NULL, `shoe_url` TEXT, `like_url` INTEGER, `category` TEXT, `last_updated` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -63,9 +63,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "likeUrl",
+            "fieldPath": "like",
             "columnName": "like_url",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -94,7 +94,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'de9c3c08af9a1ada32e9a6359a645df6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a4f940a377b731153a2e5bb5589aae44')"
     ]
   }
 }
