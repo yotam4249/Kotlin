@@ -42,6 +42,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,13 +55,15 @@ import com.example.kotlinproject.data.ui.viewmodel.fragments.EditProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import androidx.navigation.fragment.navArgs
 import com.example.kotlinproject.AuthActivity
+import com.example.kotlinproject.data.ImageHandler
+import com.example.kotlinproject.data.model.User
 
 class ProfileFragment : Fragment() {
-
     private val viewModel: ProfileViewModel by viewModels {
         ProfileViewModelFactory(PostRepository(requireContext()), UserRepository(requireContext()))
     }
     private val args : ProfileFragmentArgs by navArgs()
+    private lateinit var user : User
     private lateinit var avatarImageView: ImageView
     private lateinit var userNameTextView: TextView
     private lateinit var emailTextView: TextView
@@ -94,10 +97,28 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val user = args.user!!
-        userNameTextView.text = user.name
-        emailTextView.text = user.email
-        Glide.with(this).load(user.photoUrl).into(avatarImageView)
+        val userRepository = UserRepository(requireContext())
+        val passedUser = args.user
+
+        // Load latest user from Room
+        lifecycleScope.launchWhenStarted {
+            val freshUser = userRepository.getUserByEmail(passedUser.email) ?: passedUser
+            user = freshUser
+
+            userNameTextView.text = user.name
+            emailTextView.text = user.email
+
+            if (!user.photoUrl.isNullOrEmpty()) {
+                val file = ImageHandler.getImageFile(requireContext(), user.photoUrl!!)
+                if (file != null) {
+                    Glide.with(this@ProfileFragment).load(file).into(avatarImageView)
+                } else {
+                    avatarImageView.setImageResource(R.drawable.avatar_icon)
+                }
+            } else {
+                avatarImageView.setImageResource(R.drawable.avatar_icon)
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -126,13 +147,12 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-
-            // Optional: Finish current activity to prevent going back
             requireActivity().finish()
         }
 
         editButton.setOnClickListener {
-            findNavController().navigate(R.id.EditProfile)
+            val action = ProfileFragmentDirections.actionGlobalEditProfile(user)
+            findNavController().navigate(action)
         }
     }
 }

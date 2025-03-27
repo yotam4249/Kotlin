@@ -97,7 +97,7 @@
 
     <fragment
         android:id="@+id/EditProfile"
-        android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.ProfileFragment"
+        android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" >
         <argument

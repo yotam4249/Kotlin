@@ -1,6 +1,6 @@
 
 package com.example.kotlinproject.ui
-
+//package com.example.kotlinproject.data.ui.viewmodel.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
