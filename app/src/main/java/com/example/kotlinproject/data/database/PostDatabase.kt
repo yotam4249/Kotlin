@@ -9,7 +9,7 @@ import com.example.kotlinproject.data.model.Post
 
 
 
-@Database(entities = [Post::class], version = 1)
+@Database(entities = [Post::class], version = 2)
 abstract class PostDatabase : RoomDatabase() {
     abstract fun postDao(): PostDao
 
@@ -23,7 +23,8 @@ abstract class PostDatabase : RoomDatabase() {
                     context.applicationContext,
                     PostDatabase::class.java,
                     "post_database"
-                ).build()
+                )
+                    .build()
                 INSTANCE = instance
                 instance
             }

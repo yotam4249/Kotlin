@@ -28,6 +28,16 @@ class PostAdapter(private var posts: List<Post>) : RecyclerView.Adapter<PostAdap
         notifyDataSetChanged()
     }
 
+    fun updateUserInAllPosts(userId: String, newUserName: String, newAvatarUrl: String) {
+        val updatedPosts = posts.map { post ->
+            if (post.userId == userId) {
+                post.copy(userName = newUserName, avatarUrl = newAvatarUrl)
+            } else post
+        }
+        updatePosts(updatedPosts)
+    }
+
+
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.post_name)
         private val brandTextView: TextView = itemView.findViewById(R.id.post_brand)

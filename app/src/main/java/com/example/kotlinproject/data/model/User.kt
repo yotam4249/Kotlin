@@ -13,4 +13,7 @@ data class User(
     val email:String,
     val photoUrl:String? = null,
 
-) : Parcelable
+) : Parcelable {
+    // Needed for Firebase Firestore deserialization
+    constructor() : this("", "", "", null)
+}
