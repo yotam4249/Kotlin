@@ -27,6 +27,18 @@ class ProfileViewModel(
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> get() = _posts
 
+    fun getPostsByUser(username: String): LiveData<List<Post>> {
+        return postRepository.getPostsByUser(username)
+    }
+    fun deletePost(post: Post) {
+        viewModelScope.launch {
+            postRepository.deletePost(post)
+        }
+    }
+
+
+
+
     val isLoading = MutableLiveData(false)
 
     /**
@@ -40,6 +52,7 @@ class ProfileViewModel(
             Log.e("ProfileViewModel", "User not logged in")
             return
         }
+
 
         viewModelScope.launch(Dispatchers.IO) {
             try {

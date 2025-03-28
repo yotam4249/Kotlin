@@ -135,6 +135,33 @@
             app:layout_constraintStart_toEndOf="@id/post_like_icon"
             app:layout_constraintTop_toTopOf="@id/post_like_icon"
             app:layout_constraintBottom_toBottomOf="@id/post_like_icon"/>
+        <!-- Edit & Delete Buttons -->
+        <LinearLayout
+            android:id="@+id/post_owner_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/post_like_count"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/post_edit_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Edit" />
+
+            <ImageView
+                android:id="@+id/post_delete_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Delete" />
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

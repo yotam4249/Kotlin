@@ -1,6 +1,7 @@
 package com.example.kotlinproject.data.model
 
 import android.content.Context
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,10 +9,11 @@ import com.example.kotlinproject.data.ui.viewmodel.fragments.MyApplication
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
 @Entity(tableName = "posts")
-
+@Parcelize
 data class Post(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
@@ -53,8 +55,8 @@ data class Post(
     @SerializedName("shoeUrl")
     var shoeUrl: String? = "",
 
-    @ColumnInfo(name = "like_url")
-    @SerializedName("likeUrl")
+    @ColumnInfo(name = "like")
+    @SerializedName("like")
     var like: Int? = 0,
 
     @ColumnInfo(name = "category")
@@ -63,7 +65,7 @@ data class Post(
 
     @ColumnInfo(name = "last_updated")
     var lastUpdated: Long? = null
-    ){
+    ): Parcelable {
 
     companion object{
         private const val ID = "id"

@@ -12,8 +12,13 @@ class UserRepository(context: Context) {
     private val userDao: UserDao = AppDatabase.getDatabase(context).userDao()
 
     suspend fun getUserById(userId: String): User {
-        val snapshot = db.collection("users").document(userId).get().await()
-        return snapshot.toObject(User::class.java) ?: throw Exception("User not found")
+        return try {
+            val snapshot = db.collection("users").document(userId).get().await()
+            snapshot.toObject(User::class.java) ?: throw Exception("User not found")
+        } catch (e: Exception) {
+            // Fall back to Room local DB if Firestore fails
+            userDao.getUserById(userId) ?: throw Exception("Failed to fetch user: ${e.message}")
+        }
     }
 
     suspend fun getUserByEmail(email: String): User? {

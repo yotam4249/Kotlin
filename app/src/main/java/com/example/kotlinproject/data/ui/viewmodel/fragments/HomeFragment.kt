@@ -1,11 +1,9 @@
-
 package com.example.kotlinproject.data.ui.viewmodel.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,8 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinproject.R
 import com.example.kotlinproject.data.model.User
+import com.example.kotlinproject.data.ui.viewmodel.fragments.UserRepository
 import com.example.kotlinproject.databinding.FragmentHomeBinding
 import com.example.kotlinproject.data.ui.viewmodel.PostViewModel
+import com.example.kotlinproject.data.ui.viewmodel.fragments.PostAdapter
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val args: HomeFragmentArgs by navArgs() // SafeArgs
+    private val args: HomeFragmentArgs by navArgs()
     private val postViewModel: PostViewModel by viewModels()
     private lateinit var adapter: PostAdapter
     private lateinit var currentUser: User
@@ -45,23 +45,23 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             val freshUser = repo.getUserById(uid)
             currentUser = freshUser
-            adapter.updateUserInAllPosts(
-                userId = freshUser.uid,
-                newUserName = freshUser.name,
-                newAvatarUrl = freshUser.photoUrl ?: ""
-            )
+
+            setupRecyclerView()
+            observePosts()
         }
 
         binding.shoeApiBtn.setOnClickListener {
             findNavController().navigate(R.id.action_global_shoeApiFragment)
         }
-
-        setupRecyclerView()
-        observePosts()
     }
 
     private fun setupRecyclerView() {
-        adapter = PostAdapter(emptyList())
+        adapter = PostAdapter(
+            emptyList(),
+            currentUser.uid,
+            onEditClick = { /* optional edit: no-op */ },
+            onDeleteClick = { /* optional delete: no-op */ }
+        ) // ✅ Pass userId here
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = adapter
     }

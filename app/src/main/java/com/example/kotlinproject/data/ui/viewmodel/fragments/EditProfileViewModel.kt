@@ -136,12 +136,14 @@ class EditProfileViewModel(
     }
 
     fun updateUserProfile(
-        userId: String, // Clearly use userId
+        userId: String,
+        oldName: String,
         imageUri: Uri?,
         context: Context,
         onSuccess: () -> Unit,
         onFailure: (Exception?) -> Unit
-    ) {
+    )
+    {
         viewModelScope.launch {
             try {
                 isLoading.value = true
@@ -166,6 +168,7 @@ class EditProfileViewModel(
                         newName = updatedUser.name,
                         newAvatarUrl = updatedUser.photoUrl ?: ""
                     )
+
 
                     val reloadedUser = userRepository.getUserByEmail(updatedUser.email)
                     _user.postValue(reloadedUser!!)

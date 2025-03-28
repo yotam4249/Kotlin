@@ -424,28 +424,30 @@ class EditProfileFragment : Fragment(){
         confirmBtn.setOnClickListener {
             val userId = user.uid // Clearly use uid
             val newUserName = usernameEditText.text.toString()
-
+            val oldName = user.name
             viewModel.username.value = newUserName
 
             viewModel.updateUserProfile(
                 userId = userId,
+                oldName = oldName,
                 imageUri = viewModel.newProfileImageUri,
                 context = requireContext(),
                 onSuccess = {
                     Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
-                    val updatedUser = viewModel.user.value!!
-                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(updatedUser)
+                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(user)
                     findNavController().navigate(action)
-                },
+                }
+                ,
                 onFailure = {
-                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             )
         }
 
 
 
-        changePasswordBtn.setOnClickListener {
+            changePasswordBtn.setOnClickListener {
             showChangePasswordDialog()
         }
     }

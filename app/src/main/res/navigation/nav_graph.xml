@@ -73,13 +73,19 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile">
+
         <argument
             android:name="user"
             app:argType="com.example.kotlinproject.data.model.User"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/actionProfileToEditPost"
+            app:destination="@id/editPostFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/searchFragment"
@@ -114,5 +120,16 @@
             app:argType="com.example.kotlinproject.data.model.User"
             app:nullable="false" />
     </fragment>
+    <fragment
+        android:id="@+id/editPostFragment"
+        android:name="com.example.kotlinproject.data.ui.viewmodel.fragments.EditPostFragment"
+        android:label="Edit Post">
+        <argument
+            android:name="post"
+            app:argType="com.example.kotlinproject.data.model.Post" />
+    </fragment>
+
+
+
 
 </navigation>

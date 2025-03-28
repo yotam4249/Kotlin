@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.kotlinproject.data.model.Post
 
 @Dao
@@ -34,6 +35,26 @@ interface PostDao {
     // ✅ clearly fixed query
     @Query("UPDATE posts SET user_name = :newName, avatar_url = :newAvatarUrl WHERE userId = :userId")
     suspend fun updateUserDetailsInPosts(userId: String, newName: String, newAvatarUrl: String)
+
+    @Query("UPDATE posts SET `like` = :count WHERE id = :postId")
+    suspend fun updateLikeCount(postId: Int, count: Int)
+
+    @Query("SELECT * FROM posts WHERE brand LIKE '%'  :brand  '%'")
+    fun getPostsByBrand(brand: String): LiveData<List<Post>>
+
+    @Query("SELECT * FROM posts WHERE category LIKE '%'  :category  '%'")
+    fun getPostsByCategory(category: String): LiveData<List<Post>>
+
+    @Query("SELECT * FROM posts WHERE shoe_price <= :maxPrice")
+    fun getPostsByPrice(maxPrice: Double): LiveData<List<Post>>
+
+    @Query("SELECT * FROM posts WHERE rating >= :minRating")
+    fun getPostsByRating(minRating: Float): LiveData<List<Post>>
+
+    @Update
+    suspend fun updatePost(post: Post)
+
+
 
     @Delete
     suspend fun delete(post: Post)
