@@ -36,15 +36,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
 
-    <EditText
-        android:id="@+id/etPostBrand"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dpBrand"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Brand"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/etPostName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/etPostBrand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Brand" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <EditText
         android:id="@+id/etPostRating"
@@ -52,7 +59,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:hint="Rating (0-5)"
-        app:layout_constraintTop_toBottomOf="@id/etPostBrand"
+        app:layout_constraintTop_toBottomOf="@id/dpBrand"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
@@ -78,22 +85,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
 
-    <EditText
-        android:id="@+id/etPostCategory"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dpCartegory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Category"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@id/etPostPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/etPostCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Category" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSavePost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Save Post"
-        app:layout_constraintTop_toBottomOf="@id/etPostCategory"
+        app:layout_constraintTop_toBottomOf="@id/dpCartegory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>

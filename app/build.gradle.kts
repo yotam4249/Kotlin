@@ -57,6 +57,7 @@ kapt {
 }
 dependencies {
     val ktorVersion = "2.3.4"
+    implementation ("com.google.android.material:material:1.11.0")
     implementation("org.jsoup:jsoup:1.16.1")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -63,6 +64,7 @@ class AddPostFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupDropdowns()
         binding.btnChooseImage.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
@@ -71,6 +73,27 @@ class AddPostFragment : Fragment() {
             savePostToDB()
         }
     }
+
+    private fun setupDropdowns() {
+        val brandOptions = listOf("Nike", "Adidas", "New Balance", "Puma", "Asics")
+        val categoryOptions = listOf("Casual", "Running", "Dress", "Hiking", "Basketball")
+
+        val brandAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, brandOptions)
+        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, categoryOptions)
+
+        binding.etPostBrand.setAdapter(brandAdapter)
+        binding.etPostCategory.setAdapter(categoryAdapter)
+
+        // Optional: trigger dropdown manually on click
+        binding.etPostBrand.setOnClickListener {
+            binding.etPostBrand.showDropDown()
+        }
+
+        binding.etPostCategory.setOnClickListener {
+            binding.etPostCategory.showDropDown()
+        }
+    }
+
 
     private fun launchImageCrop(uri: Uri) {
         val destinationUri = Uri.fromFile(File(requireContext().cacheDir, "post_${System.currentTimeMillis()}.jpg"))
