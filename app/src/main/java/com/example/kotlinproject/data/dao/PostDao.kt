@@ -39,10 +39,10 @@ interface PostDao {
     @Query("UPDATE posts SET `like` = :count WHERE id = :postId")
     suspend fun updateLikeCount(postId: Int, count: Int)
 
-    @Query("SELECT * FROM posts WHERE brand LIKE '%'  :brand  '%'")
+    @Query("SELECT * FROM posts WHERE brand LIKE '%' || :brand || '%'")
     fun getPostsByBrand(brand: String): LiveData<List<Post>>
 
-    @Query("SELECT * FROM posts WHERE category LIKE '%'  :category  '%'")
+    @Query("SELECT * FROM posts WHERE category LIKE '%' || :category || '%'")
     fun getPostsByCategory(category: String): LiveData<List<Post>>
 
     @Query("SELECT * FROM posts WHERE shoe_price <= :maxPrice")
