@@ -45,7 +45,12 @@ class SearchFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewSearchResults)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        postAdapter = PostAdapter(emptyList())
+        postAdapter = PostAdapter(
+            emptyList(),
+           currentUser.uid,
+            onEditClick = {},
+            onDeleteClick = {}
+        )
         recyclerView.adapter = postAdapter
 
         val brandOptions = listOf("Nike", "Adidas", "New Balance", "Puma", "Asics")
