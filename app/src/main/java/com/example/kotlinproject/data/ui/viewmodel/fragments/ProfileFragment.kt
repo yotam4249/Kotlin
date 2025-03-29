@@ -81,6 +81,14 @@ class ProfileFragment : Fragment() {
             }
 
             setupRecyclerView()
+
+            // ✅ Update posts with the latest user name and avatar
+            postAdapter.updateUserInAllPosts(
+                userId = user.uid,
+                newUserName = user.name,
+                newAvatarUrl = user.photoUrl ?: ""
+            )
+
             observeUserPosts(user.name)
         }
     }

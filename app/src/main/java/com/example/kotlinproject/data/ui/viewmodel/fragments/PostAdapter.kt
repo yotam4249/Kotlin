@@ -114,6 +114,7 @@ class PostAdapter(
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val priceTextView: TextView = itemView.findViewById(R.id.post_price)
         private val nameTextView: TextView = itemView.findViewById(R.id.post_name)
         private val brandTextView: TextView = itemView.findViewById(R.id.post_brand)
         private val ratingTextView: TextView = itemView.findViewById(R.id.post_rating)
@@ -129,6 +130,7 @@ class PostAdapter(
         private val ownerActions: View = itemView.findViewById(R.id.post_owner_actions)
 
         fun bind(post: Post, userId: String) {
+            priceTextView.text = "$${post.shoePrice}"
             nameTextView.text = post.name
             brandTextView.text = post.brand
             ratingTextView.text = "\u2B50 ${post.rating}"
@@ -173,6 +175,15 @@ class PostAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(posts[position], userId)
+    }
+
+    fun updateUserInAllPosts(userId: String, newUserName: String, newAvatarUrl: String) {
+                val updatedPosts = posts.map { post ->
+            if (post.userId == userId) {
+                post.copy(userName = newUserName, avatarUrl = newAvatarUrl)
+            } else post
+        }
+        updatePosts(updatedPosts)
     }
 
     override fun getItemCount(): Int = posts.size

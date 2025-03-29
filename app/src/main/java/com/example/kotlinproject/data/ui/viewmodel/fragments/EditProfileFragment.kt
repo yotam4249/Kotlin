@@ -434,13 +434,12 @@ class EditProfileFragment : Fragment(){
                 context = requireContext(),
                 onSuccess = {
                     Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
-                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(user)
+                    val updatedUser = viewModel.user.value ?: user
+                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(updatedUser)
                     findNavController().navigate(action)
-                }
-                ,
+                },
                 onFailure = {
-                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT).show()
                 }
             )
         }

@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
     private fun observePosts() {
         postViewModel.allPosts.observe(viewLifecycleOwner) { posts ->
             adapter.updatePosts(posts)
+            adapter.updateUserInAllPosts(currentUser.uid, currentUser.name, currentUser.photoUrl ?: "")
         }
     }
 
