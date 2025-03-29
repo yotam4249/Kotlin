@@ -1,71 +1,112 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
+    <!-- Category Dropdown -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/categoryDropdownLayout"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Select Category"
-        android:layout_marginTop="8dp">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/inputCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Category"
-            android:focusable="false"
             android:inputType="none"
+            android:focusable="false"
             android:clickable="true" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <!-- Brand Dropdown -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/brandDropdownLayout"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Select Brand"
-        android:layout_marginTop="8dp">
+        app:layout_constraintTop_toBottomOf="@id/categoryDropdownLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/inputBrand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Brand"
-            android:focusable="false"
             android:inputType="none"
+            android:focusable="false"
             android:clickable="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    <EditText
-        android:id="@+id/inputMaxPrice"
+    <!-- Max Price -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/EpriceLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="Max Price"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/brandDropdownLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
 
-    <EditText
-        android:id="@+id/inputMinRating"
+        <EditText
+            android:id="@+id/inputMaxPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Min Rating -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ratingLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="Min Rating"
-        android:inputType="numberDecimal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toBottomOf="@id/EpriceLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp">
 
+        <EditText
+            android:id="@+id/inputMinRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Search Button -->
     <Button
         android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="Search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:backgroundTint="#A7C7E7"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/ratingLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchResults"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/btnSearch"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
