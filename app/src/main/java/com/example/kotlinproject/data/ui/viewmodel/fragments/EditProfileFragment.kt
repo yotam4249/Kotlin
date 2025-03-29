@@ -407,7 +407,7 @@ class EditProfileFragment : Fragment(){
             }
         })
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
-            progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+            progressBar.visibility = if (loading) View.GONE else View.GONE
         }
     }
 
@@ -434,12 +434,13 @@ class EditProfileFragment : Fragment(){
                 context = requireContext(),
                 onSuccess = {
                     Toast.makeText(requireContext(), "Profile updated!", Toast.LENGTH_SHORT).show()
-                    val updatedUser = viewModel.user.value ?: user
-                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(updatedUser)
+                    val action = EditProfileFragmentDirections.actionGlobalProfileFragment(user)
                     findNavController().navigate(action)
-                },
+                }
+                ,
                 onFailure = {
-                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Error: ${it?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             )
         }

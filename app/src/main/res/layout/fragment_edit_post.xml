@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -9,36 +10,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/edit_post_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/shoe_avatar"
+            android:contentDescription="Post Image" />
+
+        <Button
+            android:id="@+id/btn_change_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Image"
+            android:layout_marginTop="8dp" />
+
         <EditText
             android:id="@+id/edit_post_name"
             android:hint="Post Name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
 
-        <EditText
-            android:id="@+id/edit_post_brand"
-            android:hint="Brand"
+        <!-- Brand Dropdown -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/brandDropdownLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Select Brand">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/edit_post_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/edit_post_rating"
             android:hint="Rating"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
 
         <EditText
             android:id="@+id/edit_post_description"
             android:hint="Description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
 
-        <EditText
-            android:id="@+id/edit_post_category"
-            android:hint="Category"
+        <!-- Category Dropdown -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/categoryDropdownLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Select Category">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/edit_post_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_save_post"

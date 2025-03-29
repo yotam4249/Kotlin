@@ -130,43 +130,99 @@ class PostAdapter(
         private val deleteIcon: ImageView = itemView.findViewById(R.id.post_delete_icon)
         private val ownerActions: View = itemView.findViewById(R.id.post_owner_actions)
 
-        fun bind(post: Post, userId: String) {
-            priceTextView.text = "$${post.shoePrice}"
-            nameTextView.text = post.name
-            brandTextView.text = post.brand
-            ratingTextView.text = "\u2B50 ${post.rating}"
-            descriptionTextView.text = post.shoeDescription
-            categoryTextView.text = post.category
-            usernameTextView.text = post.userName
-            likeCountTextView.text = post.like.toString()
+//        fun bind(post: Post, userId: String) {
+//            priceTextView.text = "$${post.shoePrice}"
+//            nameTextView.text = post.name
+//            brandTextView.text = post.brand
+//            ratingTextView.text = "\u2B50 ${post.rating}"
+//            descriptionTextView.text = post.shoeDescription
+//            categoryTextView.text = post.category
+//            usernameTextView.text = post.userName
+//            likeCountTextView.text = post.like.toString()
+//
+//            val postImageFile = File(post.shoeUrl ?: "")
+//            Glide.with(itemView.context)
+//                .load(if (postImageFile.exists()) postImageFile else R.drawable.shoe_avatar)
+//                .into(postImageView)
+//
+//            val avatarFile = File(post.avatarUrl)
+//            Glide.with(itemView.context)
+//                .load(if (avatarFile.exists()) avatarFile else R.drawable.avatar_icon)
+//                .circleCrop()
+//                .into(avatarImageView)
+//
+//            likeIcon.setOnClickListener {
+//                val context = itemView.context
+//                val viewModel = ViewModelProvider(context as ViewModelStoreOwner)[PostViewModel::class.java]
+//                viewModel.likePost(post.id, userId) { newCount ->
+//                    likeCountTextView.text = newCount.toString()
+//                }
+//            }
+//
+//            if (post.userId == userId) {
+//                ownerActions.visibility = View.VISIBLE
+//                editIcon.setOnClickListener { onEditClick(post) }
+//                deleteIcon.setOnClickListener { onDeleteClick(post) }
+//            } else {
+//                ownerActions.visibility = View.GONE
+//            }
+//        }
+fun bind(post: Post, userId: String) {
+    priceTextView.text = "$${post.shoePrice}"
+    nameTextView.text = post.name
+    brandTextView.text = post.brand
+    ratingTextView.text = "\u2B50 ${post.rating}"
+    descriptionTextView.text = post.shoeDescription
+    categoryTextView.text = post.category
+    usernameTextView.text = post.userName
+    likeCountTextView.text = post.like.toString()
 
-            val postImageFile = File(post.shoeUrl ?: "")
-            Glide.with(itemView.context)
-                .load(if (postImageFile.exists()) postImageFile else R.drawable.shoe_avatar)
-                .into(postImageView)
+    // ✅ LOAD POST IMAGE (Check if image path is not empty and file exists)
+    if (!post.shoeUrl.isNullOrEmpty()) {
+        val postImageFile = File(post.shoeUrl!!)
+        Glide.with(itemView.context)
+            .load(postImageFile)
+            .placeholder(R.drawable.shoe_avatar)
+            .error(R.drawable.shoe_avatar)
+            .skipMemoryCache(true) // ⛔ Skip Glide memory cache
+            .into(postImageView)
+    } else {
+        postImageView.setImageResource(R.drawable.shoe_avatar)
+    }
 
-            val avatarFile = File(post.avatarUrl)
-            Glide.with(itemView.context)
-                .load(if (avatarFile.exists()) avatarFile else R.drawable.avatar_icon)
-                .circleCrop()
-                .into(avatarImageView)
+    // ✅ LOAD AVATAR IMAGE (same logic)
+    if (!post.avatarUrl.isNullOrEmpty()) {
+        val avatarFile = File(post.avatarUrl)
+        Glide.with(itemView.context)
+            .load(avatarFile)
+            .placeholder(R.drawable.avatar_icon)
+            .error(R.drawable.avatar_icon)
+            .circleCrop()
+            .skipMemoryCache(true)
+            .into(avatarImageView)
+    } else {
+        avatarImageView.setImageResource(R.drawable.avatar_icon)
+    }
 
-            likeIcon.setOnClickListener {
-                val context = itemView.context
-                val viewModel = ViewModelProvider(context as ViewModelStoreOwner)[PostViewModel::class.java]
-                viewModel.likePost(post.id, userId) { newCount ->
-                    likeCountTextView.text = newCount.toString()
-                }
-            }
-
-            if (post.userId == userId) {
-                ownerActions.visibility = View.VISIBLE
-                editIcon.setOnClickListener { onEditClick(post) }
-                deleteIcon.setOnClickListener { onDeleteClick(post) }
-            } else {
-                ownerActions.visibility = View.GONE
-            }
+    // ✅ LIKE BUTTON HANDLER
+    likeIcon.setOnClickListener {
+        val context = itemView.context
+        val viewModel = ViewModelProvider(context as ViewModelStoreOwner)[PostViewModel::class.java]
+        viewModel.likePost(post.id, userId) { newCount ->
+            likeCountTextView.text = newCount.toString()
         }
+    }
+
+    // ✅ OWNER ACTIONS
+    if (post.userId == userId) {
+        ownerActions.visibility = View.VISIBLE
+        editIcon.setOnClickListener { onEditClick(post) }
+        deleteIcon.setOnClickListener { onDeleteClick(post) }
+    } else {
+        ownerActions.visibility = View.GONE
+    }
+}
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
