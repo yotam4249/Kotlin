@@ -26,7 +26,9 @@ class ProfileViewModel(
 
     private val _posts = MutableLiveData<List<Post>>()
     val posts: LiveData<List<Post>> get() = _posts
-
+    fun getPostsByUserId(userId: String): LiveData<List<Post>> {
+        return postRepository.getPostsByUserId(userId)
+    }
     fun getPostsByUser(username: String): LiveData<List<Post>> {
         return postRepository.getPostsByUser(username)
     }

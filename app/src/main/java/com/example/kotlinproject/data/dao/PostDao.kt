@@ -51,6 +51,9 @@ interface PostDao {
     @Query("SELECT * FROM posts WHERE rating >= :minRating")
     fun getPostsByRating(minRating: Float): LiveData<List<Post>>
 
+    @Query("SELECT * FROM posts WHERE userId = :userId")
+    fun getPostsByUserId(userId: String): LiveData<List<Post>>
+
     @Update
     suspend fun updatePost(post: Post)
 

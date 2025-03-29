@@ -31,7 +31,9 @@ class PostRepository(context: Context) {
         postDao.updateLikeCount(postId, count)
         return count
     }
-
+    fun getPostsByUserId(userId: String): LiveData<List<Post>> {
+        return postDao.getPostsByUserId(userId)
+    }
     suspend fun getLikeCount(postId: Int): Int {
         return postLikeDao.getLikeCount(postId)
     }

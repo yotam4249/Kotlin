@@ -3,6 +3,7 @@ package com.example.kotlinproject.data.ui.viewmodel.fragments
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,7 +90,19 @@ class ProfileFragment : Fragment() {
                 newAvatarUrl = user.photoUrl ?: ""
             )
 
-            observeUserPosts(user.name)
+            observeUserPostsById(user.uid)
+        }
+    }
+    private fun observeUserPostsById(userId: String) {
+        viewModel.getPostsByUserId(userId).observe(viewLifecycleOwner) { posts ->
+            Log.d("ProfileFragment", "Posts loaded: ${posts.size}")
+            postAdapter.updatePosts(posts)
+
+            postAdapter.updateUserInAllPosts(
+                userId = user.uid,
+                newUserName = user.name,
+                newAvatarUrl = user.photoUrl ?: ""
+            )
         }
     }
 
@@ -119,9 +132,20 @@ class ProfileFragment : Fragment() {
 
     private fun observeUserPosts(username: String) {
         viewModel.getPostsByUser(username).observe(viewLifecycleOwner) { posts ->
+            Log.d("ProfileFragment", "Posts loaded: ${posts.size}")
+
+            setupRecyclerView() // ✅ MOVE THIS HERE
+
             postAdapter.updatePosts(posts)
+
+            postAdapter.updateUserInAllPosts(
+                userId = user.uid,
+                newUserName = user.name,
+                newAvatarUrl = user.photoUrl ?: ""
+            )
         }
     }
+
 
     private fun setupListeners() {
         logOutButton.setOnClickListener {

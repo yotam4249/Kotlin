@@ -92,6 +92,7 @@
 
 package com.example.kotlinproject.data.ui.viewmodel.fragments
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -174,6 +175,7 @@ class PostAdapter(
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+        Log.d("PostAdapter", "Binding post at position $position: ${posts[position].name}")
         holder.bind(posts[position], userId)
     }
 
@@ -191,5 +193,7 @@ class PostAdapter(
     fun updatePosts(newPosts: List<Post>) {
         posts = newPosts
         notifyDataSetChanged()
+        Log.d("PostAdapter", "Updating adapter with ${newPosts.size} posts")
+
     }
 }
